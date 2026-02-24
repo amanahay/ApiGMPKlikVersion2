@@ -1,0 +1,5 @@
+Pass: @GalaxyCore2525
+
+Username: db_abd6a9_apigmpklik_admin
+
+DB: db_abd6a9_apigmpklik

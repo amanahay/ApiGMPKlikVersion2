@@ -1,0 +1,36 @@
+-- Insert Roles
+INSERT INTO [identity].[Roles] (
+    [Id],
+    [Name],
+    [NormalizedName],
+    [Description],
+    [SortOrder],
+    [CreatedAt],
+    [CreatedBy],
+    [IsDeleted],
+    [ConcurrencyStamp]
+)
+VALUES
+('8cbcec6f-a83c-49be-b211-d3e1cec44d98','SuperAdmin','SUPERADMIN','Super Administrator dengan akses penuh',1,GETUTCDATE(),'System',0,NEWID()),
+('admin-role-id','TenantAdmin','TENANTADMIN','Tenant Administrator',2,GETUTCDATE(),'System',0,NEWID()),
+('PTG-ADMIN-PXG2yrRP','Administrator','ADMINISTRATOR','Administrator',3,GETUTCDATE(),'System',0,NEWID()),
+('PTG-AGEN-oY3QQcCI','Agen','AGEN','Agen',4,GETUTCDATE(),'System',0,NEWID()),
+('PTG-DIREKT-1xApAVma','Direktur','DIREKTUR','Direktur',5,GETUTCDATE(),'System',0,NEWID()),
+('PTG-MANAGE-AjJt6fXR','Management','MANAGEMENT','Management',6,GETUTCDATE(),'System',0,NEWID()),
+('readonly-role-id','ReadOnly','READONLY','Read Only Access',7,GETUTCDATE(),'System',0,NEWID()),
+('SYST-KOMISA-f89CC0zi','Komisaris','KOMISARIS','Komisaris',8,GETUTCDATE(),'System',0,NEWID()),
+('user-role-id','TenantUser','TENANTUSER','Tenant User',9,GETUTCDATE(),'System',0,NEWID());
+
+
+-- Insert Branches
+INSERT INTO [dbo].[Branches] ( [Address], [Phone], [Email], [City], [Province], [PostalCode], [Latitude], [Longitude], [IsMainBranch], [CreatedAt], [CreatedBy], [IsDeleted], [IsActive], [Name], [Code], [Description], [SortOrder] ) VALUES ( 'Bekasi', NULL, NULL, 'Bekasi', 'Jawa Barat', NULL, NULL, NULL, 1, SYSDATETIME(), 'system', 0, 1, 'Cabang Bekasi', '01', 'Cabang Bekasi', 1 ), ( 'Bandung', NULL, NULL, 'Bandung', 'Jawa Barat', NULL, NULL, NULL, 0, SYSDATETIME(), 'system', 0, 1, 'Cabang Bandung', '02', 'Cabang Bandung', 2 ), ( 'Jakarta', NULL, NULL, 'Jakarta', 'DKI Jakarta', NULL, NULL, NULL, 0, SYSDATETIME(), 'system', 0, 1, 'Cabang Jakarta', '03', 'Cabang Jakarta', 3 ), ( 'Depok', NULL, NULL, 'Depok', 'Jawa Barat', NULL, NULL, NULL, 0, SYSDATETIME(), 'system', 0, 1, 'Cabang Depok', '04', 'Cabang Depok', 4 );
+
+-- Insert SuperAdmin User
+DECLARE @UserId NVARCHAR(450) = NEWID(); 
+DECLARE @BranchId INT; 
+DECLARE @RoleId NVARCHAR(450); SELECT @BranchId = Id FROM [dbo].[Branches] WHERE [Code] = '01'; IF @BranchId IS NULL THROW 50001, 'Branch 01 tidak ditemukan.', 1; SELECT @RoleId = Id FROM [identity].[Roles] WHERE [NormalizedName] = 'SUPERADMIN'; IF @RoleId IS NULL THROW 50002, 'Role SUPERADMIN tidak ditemukan.', 1; INSERT INTO [identity].[Users] ( [Id],[FullName],[CreatedAt],[CreatedBy], [IsDeleted],[IsActive],[BranchId], [UserName],[NormalizedUserName], [Email],[NormalizedEmail],[EmailConfirmed], [PasswordHash],[SecurityStamp],[ConcurrencyStamp], [PhoneNumberConfirmed],[TwoFactorEnabled], [LockoutEnabled],[AccessFailedCount] ) VALUES ( @UserId, 'Super Administrator', SYSDATETIME(), 'system', 0,1, @BranchId, 'SuperAdmin','SUPERADMIN', 'superadmin@local.com','SUPERADMIN@LOCAL.COM',1, 'AQAAAAEAACcQAAAAEMockHashGantiDenganAsli==', NEWID(),NEWID(), 0,0,0,0 ); INSERT INTO [identity].[UserRoles] ([UserId],[RoleId]) VALUES (@UserId,@RoleId);
+
+-- Insert Master Security Questions
+IF NOT EXISTS ( SELECT 1 FROM [identity].[MasterSecurityQuestions] WHERE [Question] = 'Nama lengkap Ahli Waris Anda?' ) BEGIN INSERT INTO [identity].[MasterSecurityQuestions] ( [Question], [Description], [SortOrder], [IsRequired], [IsActive], [CreatedAt], [CreatedBy] ) VALUES ( 'Nama lengkap Ahli Waris Anda?', 'Nama lengkap sesuai KTP ahli waris', 1, 1, 1, GETUTCDATE(), 'System' ); END IF NOT EXISTS ( SELECT 1 FROM [identity].[MasterSecurityQuestions] WHERE [Question] = 'Nama Ibu Kandung Anda?' ) BEGIN INSERT INTO [identity].[MasterSecurityQuestions] ( [Question], [Description], [SortOrder], [IsRequired], [IsActive], [CreatedAt], [CreatedBy] ) VALUES ( 'Nama Ibu Kandung Anda?', 'Nama ibu kandung sejak lahir', 2, 1, 1, GETUTCDATE(), 'System' ); END IF NOT EXISTS ( SELECT 1 FROM [identity].[MasterSecurityQuestions] WHERE [Question] = 'Nama lengkap Nenek Anda (dari pihak Ibu)?' ) BEGIN INSERT INTO [identity].[MasterSecurityQuestions] ( [Question], [Description], [SortOrder], [IsRequired], [IsActive], [CreatedAt], [CreatedBy] ) VALUES ( 'Nama lengkap Nenek Anda (dari pihak Ibu)?', 'Nama nenek dari pihak ibu', 3, 1, 1, GETUTCDATE(), 'System' ); END
+
+

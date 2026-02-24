@@ -1,0 +1,65 @@
+AWAL UNGGAH
+
+git add .
+git commit -m "Initial commit ApiGMPKlik"
+git branch -M main
+git remote add origin https://github.com/amanahay/ApiGMPKlik.git
+git push -u origin main
+
+======================================
+Langkah selanjutnya setelah berhasil unggah ke GitHub:
+
+# Ignore Visual Studio temporary files, build results, and
+BUAT FILE .gitignore
+ISI NYA:
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+Debug/
+Release/
+
+# .NET
+*.dll
+*.exe
+*.pdb
+*.cache
+*.deps.json
+*.runtimeconfig.json
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Publish
+publish/
+
+
+🔥 2️⃣ Hapus cache file sampah dari git (sekali saja)
+git rm -r --cached .vs
+git rm -r --cached bin
+git rm -r --cached obj
+
+
+
+🔥 Setelah ini cara update project ke GitHub
+
+Setiap ada perubahan file harus:
+
+git add .
+git commit -m "pesan update"
+git push

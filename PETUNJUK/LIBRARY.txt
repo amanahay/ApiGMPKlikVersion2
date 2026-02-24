@@ -1,0 +1,64 @@
+
+C:\Users\yohan\source\repos\ApiGMPKlik>dotnet list package
+Restore complete (2,1s)
+
+Build succeeded in 2,3s
+Project 'ApiGMPKlik' has the following package references
+   [net10.0]:
+   Top-level Package                                           Requested   Resolved
+   > Asp.Versioning.Mvc                                        8.1.1       8.1.1
+   > Asp.Versioning.Mvc.ApiExplorer                            8.1.1       8.1.1
+   > AutoMapper                                                16.0.0      16.0.0
+   > FluentValidation                                          12.1.1      12.1.1
+   > FluentValidation.DependencyInjectionExtensions            12.1.1      12.1.1
+   > Hangfire                                                  1.8.23      1.8.23
+   > Hangfire.AspNetCore                                       1.8.23      1.8.23
+   > Hangfire.SqlServer                                        1.8.23      1.8.23
+   > MailKit                                                   4.15.0      4.15.0
+   > MediatR                                                   14.0.0      14.0.0
+   > Microsoft.AspNetCore.Authentication.Facebook              10.0.3      10.0.3
+   > Microsoft.AspNetCore.Authentication.Google                10.0.3      10.0.3
+   > Microsoft.AspNetCore.Authentication.JwtBearer             10.0.3      10.0.3
+   > Microsoft.AspNetCore.Authentication.MicrosoftAccount      10.0.3      10.0.3
+   > Microsoft.AspNetCore.Identity.EntityFrameworkCore         10.0.3      10.0.3
+   > Microsoft.AspNetCore.Mvc.NewtonsoftJson                   10.0.3      10.0.3
+   > Microsoft.AspNetCore.OpenApi                              10.0.3      10.0.3
+   > Microsoft.EntityFrameworkCore.Sqlite                      10.0.3      10.0.3
+   > Microsoft.EntityFrameworkCore.SqlServer                   10.0.3      10.0.3
+   > Microsoft.EntityFrameworkCore.Tools                       10.0.3      10.0.3
+   > NSwag.AspNetCore                                          14.6.3      14.6.3
+   > SharpZipLib                                               1.4.2       1.4.2
+   > SixLabors.ImageSharp                                      3.1.12      3.1.12
+
+
+MIGRASI:
+DROP DB:
+dotnet ef database drop --context ApplicationDbContext --force
+
+
+dotnet ef migrations remove --context ApplicationDbContext --force
+
+SQL Server (Primary)
+dotnet ef migrations add AddBusinessSchema --context ApplicationDbContext --output-dir Migrations/SqlServer
+
+
+SQLite (Secondary)
+dotnet ef migrations add AddCacheSchema --context SecondaryDbContext --output-dir Migrations/SQLite
+
+
+
+# Update SQL Server
+dotnet ef database update --context ApplicationDbContext
+
+# Update SQLite  
+dotnet ef database update --context SecondaryDbContext
+
+
+dotnet ef migrations add AddBusinessSchema --context ApplicationDbContext
+dotnet ef database update --context ApplicationDbContext
+
+
+
+dotnet ef migrations add AddPasswordChangeTrackingFields --context ApplicationDbContext
+
+dotnet ef migrations add AddqUESTION --context ApplicationDbContext
