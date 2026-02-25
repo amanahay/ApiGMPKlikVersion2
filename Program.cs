@@ -1,10 +1,14 @@
 using ApiGMPKlik.Application.Interfaces;
 using ApiGMPKlik.Demo;
 using ApiGMPKlik.Infrastructure;
+using ApiGMPKlik.Infrastructure.Address;
 using ApiGMPKlik.Interfaces;
+using ApiGMPKlik.Interfaces.DataPrice;
 using ApiGMPKlik.Interfaces.Repositories;
 using ApiGMPKlik.Models;
 using ApiGMPKlik.Services;
+using ApiGMPKlik.Services.Address;
+using ApiGMPKlik.Services.DataPrice;
 using ApiGMPKlik.Shared;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
@@ -428,7 +432,20 @@ builder.Services.AddScoped<IUserSecurityService, UserSecurityService>();
 builder.Services.AddScoped<IReferralTreeService, ReferralTreeService>();
 builder.Services.AddScoped<IBranchService, BranchService>();
 
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>(); 
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+// Address Services Registration
+builder.Services.AddScoped<IWilayahProvinsiService, WilayahProvinsiService>();
+builder.Services.AddScoped<IWilayahKotaKabService, WilayahKotaKabService>();
+builder.Services.AddScoped<IWilayahKecamatanService, WilayahKecamatanService>();
+builder.Services.AddScoped<IWilayahKelurahanDesaService, WilayahKelurahanDesaService>();
+builder.Services.AddScoped<IWilayahDusunService, WilayahDusunService>();
+builder.Services.AddScoped<IWilayahRwService, WilayahRwService>();
+builder.Services.AddScoped<IWilayahRtService, WilayahRtService>();
+builder.Services.AddScoped<IAddressSearchService, AddressSearchService>();
+
+builder.Services.AddScoped<IDataPriceRangeService, DataPriceRangeService>();
+
 builder.Services.AddMemoryCache();
 builder.Services.AddPermissionPolicies();
 

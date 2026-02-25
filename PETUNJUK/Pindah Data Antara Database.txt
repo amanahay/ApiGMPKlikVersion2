@@ -1,0 +1,47 @@
+-- Pindah Data Antara Database 
+SET IDENTITY_INSERT db_abd6a9_apigmpklik.dbo.Wilayah_Provinsi ON;
+
+INSERT INTO db_abd6a9_apigmpklik.dbo.Wilayah_Provinsi
+(
+    Id,
+    kode_provinsi,
+    nama,
+    latitude,
+    longitude,
+    timezone,
+    sort_order,
+    notes,
+    CreatedAt,
+    CreatedBy,
+    UpdatedAt,
+    UpdatedBy,
+    IsDeleted,
+    DeletedAt,
+    DeletedBy,
+    IsActive,
+    Metadata
+)
+SELECT
+    Id,
+    kode_provinsi,
+    nama,
+    latitude,
+    longitude,
+    timezone,
+    sort_order,
+    notes,
+    CreatedAt,
+    CreatedBy,
+    UpdatedAt,
+    UpdatedBy,
+    IsDeleted,
+    DeletedAt,
+    DeletedBy,
+    IsActive,
+    Metadata
+FROM db_abd6a9_bigdata.dbo.Wilayah_Provinsi;
+
+SET IDENTITY_INSERT db_abd6a9_apigmpklik.dbo.Wilayah_Provinsi OFF;
+
+
+

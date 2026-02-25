@@ -61,4 +61,7 @@ dotnet ef database update --context ApplicationDbContext
 
 dotnet ef migrations add AddPasswordChangeTrackingFields --context ApplicationDbContext
 
-dotnet ef migrations add AddqUESTION --context ApplicationDbContext
+dotnet ef migrations add AddWilayah --context ApplicationDbContext
+
+
+dotnet ef migrations add AddPrice --context ApplicationDbContext

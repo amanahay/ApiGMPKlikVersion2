@@ -1,9 +1,9 @@
 AWAL UNGGAH
 
 git add .
-git commit -m "Initial commit ApiGMPKlik"
+git commit -m "Initial commit ApiGMPKlikVersion2"
 git branch -M main
-git remote add origin https://github.com/amanahay/ApiGMPKlik.git
+git remote add origin https://github.com/amanahay/ApiGMPKlikVersion2.git
 git push -u origin main
 
 ======================================
